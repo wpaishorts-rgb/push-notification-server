@@ -34,6 +34,8 @@ app.post('/send-notification', async (req, res) => {
       tokens
     };
 
+    const response = await admin.messaging().sendEachForMulticast(payload);
+
     res.json({
   success: true,
   successCount: response.successCount,
