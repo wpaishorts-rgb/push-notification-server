@@ -34,14 +34,15 @@ app.post('/send-notification', async (req, res) => {
       tokens
     };
 
-    const response = await admin.messaging().sendEachForMulticast(payload);
-    console.log(response);
     res.json({
-      success: true,
-      successCount: response.successCount,
-      failureCount: response.failureCount
-    });
-
+  success: true,
+  successCount: response.successCount,
+  failureCount: response.failureCount,
+  responses: response.responses.map(r => ({
+    success: r.success,
+    error: r.error ? r.error.message : null
+  }))
+});
   } catch (err) {
     res.status(500).json({
       error: err.message
